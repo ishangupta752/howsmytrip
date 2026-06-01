@@ -21,7 +21,7 @@ function App() {
     { name: 'AK-47', thc: '21', type: 'Hybrid', effects: 'Happy, Euphoric, Uplifted' }
   ];
 
-  // Drink info - cocktail clearly shows 30ml pure alcohol
+  // Drink info
   const drinkInfo = {
     beer: { name: 'Beer 🍺', ml: 355, abv: '5%', grams: 14 },
     wine: { name: 'Wine 🍷', ml: 148, abv: '12%', grams: 14 },
@@ -258,6 +258,61 @@ function App() {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         input, select { font-family: 'Inter', sans-serif; }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+          .two-column {
+            grid-template-columns: 1fr !important;
+          }
+          .metrics-panel {
+            position: relative !important;
+            top: 0 !important;
+            margin-bottom: 20px;
+          }
+          input, select, button {
+            font-size: 16px !important;
+          }
+          .grid-2 {
+            grid-template-columns: 1fr !important;
+          }
+          .effect-score-grid {
+            flex-direction: column;
+            align-items: center;
+            gap: 16px !important;
+          }
+          .trap-grid {
+            flex-direction: column;
+            gap: 16px !important;
+          }
+          .chart-row {
+            flex-wrap: wrap;
+          }
+          .chart-row span {
+            width: auto !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          body {
+            padding: 0;
+          }
+          .container {
+            padding: 16px;
+          }
+          h1 {
+            font-size: 24px;
+          }
+          .logo {
+            font-size: 20px;
+          }
+          .nav-buttons {
+            gap: 8px;
+          }
+          .tab-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+          }
+        }
       `}</style>
 
       <div style={{ background: '#1E2532', borderRadius: '12px', padding: '12px 20px', marginBottom: '24px', borderLeft: '4px solid #FF8C42' }}>
@@ -266,19 +321,19 @@ function App() {
         </p>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid #1E2532' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid #1E2532', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ fontSize: '24px', fontWeight: '700' }}>
           <span style={{ color: '#FF8C42' }}>howsmy</span><span style={{ color: '#2DD4BF' }}>trip</span>
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           <button onClick={() => { setActiveTab('alcohol'); setShowResults(false); }} style={{ padding: '10px 24px', borderRadius: '100px', fontWeight: '500', background: activeTab === 'alcohol' ? '#FF8C42' : 'transparent', color: activeTab === 'alcohol' ? '#0A0D14' : '#8A99B4', border: activeTab === 'alcohol' ? 'none' : '1px solid #1E2532', cursor: 'pointer' }}>🍺 Alcohol</button>
           <button onClick={() => { setActiveTab('cannabis'); setShowResults(false); }} style={{ padding: '10px 24px', borderRadius: '100px', fontWeight: '500', background: activeTab === 'cannabis' ? '#2DD4BF' : 'transparent', color: activeTab === 'cannabis' ? '#0A0D14' : '#8A99B4', border: activeTab === 'cannabis' ? 'none' : '1px solid #1E2532', cursor: 'pointer' }}>🌿 Cannabis</button>
           <button onClick={handleReset} style={{ padding: '10px 16px', borderRadius: '12px', background: '#1E2532', border: 'none', color: '#8A99B4', cursor: 'pointer' }}>⟳ Reset</button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '32px' }}>
-        <div style={{ background: '#11161F', borderRadius: '20px', padding: '24px', border: '1px solid #1E2532', position: 'sticky', top: '24px' }}>
+      <div className="two-column" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '32px' }}>
+        <div className="metrics-panel" style={{ background: '#11161F', borderRadius: '20px', padding: '24px', border: '1px solid #1E2532', position: 'sticky', top: '24px' }}>
           {activeTab === 'alcohol' ? (
             <>
               <div style={{ textAlign: 'center', marginBottom: '24px' }}>
@@ -309,11 +364,11 @@ function App() {
             <>
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>📋 ABOUT YOU</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Weight (kg) *</label><input type="number" value={formData.alcohol.weight} onChange={(e) => handleInputChange('alcohol', 'weight', e.target.value)} placeholder="e.g., 70" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Sex *</label><select value={formData.alcohol.sex} onChange={(e) => handleInputChange('alcohol', 'sex', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="">Select</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Age (optional)</label><input type="number" value={formData.alcohol.age} onChange={(e) => handleInputChange('alcohol', 'age', e.target.value)} placeholder="e.g., 28" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Body fat % (optional)</label><input type="number" step="0.1" value={formData.alcohol.bodyFat} onChange={(e) => handleInputChange('alcohol', 'bodyFat', e.target.value)} placeholder="e.g., 20" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
@@ -321,19 +376,19 @@ function App() {
 
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>🍺 CURRENT SESSION</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Beers (355ml, 5%)</label><input type="number" value={formData.alcohol.beers} onChange={(e) => handleInputChange('alcohol', 'beers', e.target.value)} placeholder="0" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Wines (148ml, 12%)</label><input type="number" value={formData.alcohol.wines} onChange={(e) => handleInputChange('alcohol', 'wines', e.target.value)} placeholder="0" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Shots (44ml, 40%)</label><input type="number" value={formData.alcohol.shots} onChange={(e) => handleInputChange('alcohol', 'shots', e.target.value)} placeholder="0" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Cocktails (30ml pure alcohol each)</label><input type="number" value={formData.alcohol.cocktails} onChange={(e) => handleInputChange('alcohol', 'cocktails', e.target.value)} placeholder="0" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Hours drinking *</label><input type="number" step="0.5" value={formData.alcohol.hoursDrinking} onChange={(e) => handleInputChange('alcohol', 'hoursDrinking', e.target.value)} placeholder="e.g., 2" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Hours since last *</label><input type="number" step="0.5" value={formData.alcohol.hoursSince} onChange={(e) => handleInputChange('alcohol', 'hoursSince', e.target.value)} placeholder="e.g., 1" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Food</label><select value={formData.alcohol.food} onChange={(e) => handleInputChange('alcohol', 'food', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="empty">Empty stomach</option><option value="light">Light snack</option><option value="medium">Medium meal</option><option value="heavy">Heavy meal</option></select></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Hydration</label><select value={formData.alcohol.hydration} onChange={(e) => handleInputChange('alcohol', 'hydration', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="low">Low</option><option value="average">Average</option><option value="high">High</option></select></div>
                 </div>
@@ -341,11 +396,11 @@ function App() {
 
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>📊 YOUR DRINKING HISTORY</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Years drinking</label><select value={formData.alcohol.yearsDrinking} onChange={(e) => handleInputChange('alcohol', 'yearsDrinking', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="<1">&lt;1 year</option><option value="1-5">1-5 years</option><option value="5-10">5-10 years</option><option value="10+">10+ years</option></select></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Typical drinks/session</label><select value={formData.alcohol.typicalDrinks} onChange={(e) => handleInputChange('alcohol', 'typicalDrinks', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="1-2">1-2 drinks</option><option value="3-4">3-4 drinks</option><option value="5-7">5-7 drinks</option><option value="8+">8+ drinks</option></select></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Binge frequency</label><select value={formData.alcohol.bingeFrequency} onChange={(e) => handleInputChange('alcohol', 'bingeFrequency', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="never">Never</option><option value="monthly">Monthly</option><option value="weekly">Weekly</option><option value="multiple">Multiple/week</option></select></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Last drink before today</label><select value={formData.alcohol.recency} onChange={(e) => handleInputChange('alcohol', 'recency', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="today">Today</option><option value="1-3d">1-3 days ago</option><option value="4-7d">4-7 days ago</option><option value="1-4w">1-4 weeks ago</option><option value="1m+">1+ months ago</option></select></div>
                 </div>
@@ -358,11 +413,11 @@ function App() {
             <>
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>📋 ABOUT YOU</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Weight (kg) *</label><input type="number" value={formData.cannabis.weight} onChange={(e) => handleInputChange('cannabis', 'weight', e.target.value)} placeholder="e.g., 70" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Sex *</label><select value={formData.cannabis.sex} onChange={(e) => handleInputChange('cannabis', 'sex', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="">Select</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Age (optional)</label><input type="number" value={formData.cannabis.age} onChange={(e) => handleInputChange('cannabis', 'age', e.target.value)} placeholder="e.g., 28" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Body fat % (optional)</label><input type="number" step="0.1" value={formData.cannabis.bodyFat} onChange={(e) => handleInputChange('cannabis', 'bodyFat', e.target.value)} placeholder="e.g., 20" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
@@ -370,11 +425,11 @@ function App() {
 
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>🌿 CURRENT SESSION</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Joint size (grams)</label><input type="number" step="0.1" value={formData.cannabis.jointSize} onChange={(e) => handleInputChange('cannabis', 'jointSize', e.target.value)} placeholder="e.g., 1.0" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /><div style={{ fontSize: '10px', color: '#8A99B4', marginTop: '4px' }}>~30 puffs per joint</div></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Your puffs taken</label><input type="number" value={formData.cannabis.yourPuffs} onChange={(e) => handleInputChange('cannabis', 'yourPuffs', e.target.value)} placeholder="e.g., 5" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Minutes since last dose</label><input type="number" value={formData.cannabis.minutesSince} onChange={(e) => handleInputChange('cannabis', 'minutesSince', e.target.value)} placeholder="e.g., 30" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Session length (min)</label><input type="number" value={formData.cannabis.sessionLength} onChange={(e) => handleInputChange('cannabis', 'sessionLength', e.target.value)} placeholder="30" style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }} /></div>
                 </div>
@@ -383,7 +438,7 @@ function App() {
 
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>🌱 THC / STRAIN INFO</div>
-                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
                   <button onClick={() => setThcInputMethod('strain')} style={{ flex: 1, padding: '10px', borderRadius: '12px', fontWeight: '500', background: thcInputMethod === 'strain' ? '#2DD4BF' : '#1E2532', color: thcInputMethod === 'strain' ? '#0A0D14' : '#8A99B4', border: 'none', cursor: 'pointer' }}>Select Strain</button>
                   <button onClick={() => setThcInputMethod('manual')} style={{ flex: 1, padding: '10px', borderRadius: '12px', fontWeight: '500', background: thcInputMethod === 'manual' ? '#2DD4BF' : '#1E2532', color: thcInputMethod === 'manual' ? '#0A0D14' : '#8A99B4', border: 'none', cursor: 'pointer' }}>Enter THC %</button>
                 </div>
@@ -433,7 +488,7 @@ function App() {
 
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px', color: '#8A99B4', marginBottom: '16px' }}>📊 YOUR USAGE HISTORY</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Frequency</label><select value={formData.cannabis.frequency} onChange={(e) => handleInputChange('cannabis', 'frequency', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="never">Never / First time</option><option value="rarely">Rarely (few times/year)</option><option value="occasional">Occasional (few times/month)</option><option value="regular">Regular (weekly)</option><option value="daily">Daily</option><option value="heavy">Heavy daily</option></select></div>
                   <div><label style={{ fontSize: '13px', color: '#8A99B4', marginBottom: '8px', display: 'block' }}>Years using</label><select value={formData.cannabis.yearsUsing} onChange={(e) => handleInputChange('cannabis', 'yearsUsing', e.target.value)} style={{ width: '100%', padding: '12px', background: '#1E2532', border: 'none', borderRadius: '12px', color: '#EDF2F7' }}><option value="<1">&lt;1 year</option><option value="1-5">1-5 years</option><option value="5-10">5-10 years</option><option value="10+">10+ years</option></select></div>
                 </div>
@@ -449,14 +504,14 @@ function App() {
         <div style={{ marginTop: '32px', background: '#11161F', borderRadius: '20px', padding: '28px', border: '1px solid #1E2532' }}>
           {activeTab === 'alcohol' && bac !== null ? (
             <>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '16px' }}>
+              <div className="effect-score-grid" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '16px' }}>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>EFFECT SCORE</span><div style={{ fontSize: '36px', fontWeight: '700', color: alcoholLevel.color }}>{alcoholEffect} — {alcoholLevel.level}</div></div>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>BAC</span><div style={{ fontSize: '28px', fontWeight: '700' }}>{bac.toFixed(3)}%</div></div>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>Time to sober</span><div style={{ fontSize: '28px', fontWeight: '700' }}>{timeToSober} hours</div></div>
               </div>
               <div style={{ background: 'linear-gradient(135deg, rgba(255,140,66,0.1), rgba(45,212,191,0.05))', borderRadius: '16px', padding: '20px', marginBottom: '24px', border: '1px solid rgba(255,140,66,0.2)' }}>
                 <div style={{ fontWeight: '600', marginBottom: '12px' }}>⚠️ THE TOLERANCE TRAP</div>
-                <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', marginBottom: '16px' }}>
+                <div className="trap-grid" style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '16px' }}>
                   <div><div style={{ fontSize: '12px', color: '#8A99B4' }}>You FEEL</div><div style={{ fontSize: '28px', fontWeight: '700', color: '#2DD4BF' }}>{Math.round(alcoholEffect * 0.4)}</div></div>
                   <div><div style={{ fontSize: '12px', color: '#8A99B4' }}>You ARE</div><div style={{ fontSize: '28px', fontWeight: '700', color: '#FF8C42' }}>{alcoholEffect}</div></div>
                   <div><div style={{ fontSize: '12px', color: '#8A99B4' }}>Others see</div><div style={{ fontSize: '28px', fontWeight: '700', color: '#FBBF24' }}>{Math.round(alcoholEffect * 0.6)}</div></div>
@@ -468,7 +523,7 @@ function App() {
             </>
           ) : activeTab === 'cannabis' && thcMg > 0 ? (
             <>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '16px' }}>
+              <div className="effect-score-grid" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '16px' }}>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>EFFECT SCORE</span><div style={{ fontSize: '36px', fontWeight: '700', color: cannabisLevel.color }}>{cannabisEffect} — {cannabisLevel.level}</div></div>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>THC Dose</span><div style={{ fontSize: '28px', fontWeight: '700' }}>{thcMg.toFixed(0)} mg</div></div>
                 <div><span style={{ color: '#8A99B4', fontSize: '13px' }}>Minutes since</span><div style={{ fontSize: '28px', fontWeight: '700' }}>{formData.cannabis.minutesSince || '0'} min</div></div>
